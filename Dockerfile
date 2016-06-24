@@ -10,7 +10,7 @@ RUN apt-get install -y python-pip
 RUN pip install -U pip
 RUN pip install impacket
 RUN pip install https://github.com/guelfoweb/knock/archive/knock3.zip
-RUN cd && mkdir Tools
-RUN git clone https://github.com/sqlmapproject/sqlmap.git /root/Tools/sqlmap
-RUN git clone https://github.com/Dionach/CMSmap.git /root/Tools/cmsmap
-RUN git clone https://github.com/ShawnDEvans/smbmap.git /root/Tools/smbmap
+RUN mkdir -p /root/daril/Tools/ && mkdir -p /root/daril/data/
+RUN git clone https://github.com/sqlmapproject/sqlmap.git /root/daril/Tools/sqlmap
+RUN git clone https://github.com/Dionach/CMSmap.git /root/daril/Tools/cmsmap
+RUN git clone https://github.com/ShawnDEvans/smbmap.git /root/daril/Tools/smbmap
