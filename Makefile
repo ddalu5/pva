@@ -1,7 +1,7 @@
 CONTAINER=pva
 ENV_NAME=pva_dev
 
-all: reload
+all: reload execute
 
 build:
 	@echo "[#] Building "$(ENV_NAME)" from "$(CONTAINER)
@@ -22,3 +22,6 @@ start:
 
 reload: clean build run start
 	@echo "########## ALL OPS ARE DONE ##########"
+
+execute:
+	docker exec $(ENV_NAME) python pva/pva.py
