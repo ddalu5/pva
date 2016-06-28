@@ -1,3 +1,3 @@
 ROOT_DIR = '/root/daril/pva/'
 TOOLS_DIR = '/root/daril/Tools/'
-PROJECTS_DIR = '/root/daril/pentests/'
+PROJECTS_DIR = '/root/daril/projects/'
