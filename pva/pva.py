@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import argparse
 from settings import *
+from lib.projects_management import Project
 
 
 def get_parser():
@@ -22,5 +23,6 @@ def get_parser():
 
 
 if __name__ == "__main__":
-    parser = get_parser()
-    parser.print_help()
+    project = Project("TestProject")
+    print project.get_name()
+    print project.get_date()
