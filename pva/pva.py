@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import argparse
 from lib.utils import *
+from settings import *
+from lib.projects_management import Project
 
 
 def get_parser():
