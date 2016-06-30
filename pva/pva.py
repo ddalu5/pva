@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import argparse
-from settings import *
+from lib.utils import *
 
 
 def get_parser():
@@ -22,5 +22,4 @@ def get_parser():
 
 
 if __name__ == "__main__":
-    parser = get_parser()
-    parser.print_help()
+    print address_in_blacklist('173.245.48.1')
