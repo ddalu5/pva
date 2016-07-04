@@ -1,7 +1,38 @@
 import os
 from datetime import datetime
 from settings import PROJECTS_DIR
-from lib.utils import address_in_blacklist, dump_object, create_directory
+from lib.utils import *
+
+class ProjectManagement(object):
+
+    def get_projects_list(self):
+        """
+        Get projects list
+        :return List: list of project names
+        """
+        return os.listdir(PROJECTS_DIR)
+
+
+    def get_project_types(self, project_name):
+        """
+        Get project types
+        :return List|None: list of project's types
+        """
+        project_dirname = PROJECTS_DIR+project_name.lower()
+        if not os.path.exists(project_dirname):
+            return None
+        return [p[0].upper()+p[1:] for p in os.listdir(project_dirname)]
+
+
+    def get_saved_instance(self, project_name, project_type):
+        """
+        Get list of processed project instances
+        :return List|None: list of processed project instances
+        """
+        dirname = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()
+        if not os.path.exists(dirname):
+            return None
+        return [p[:-5] for p in os.listdir(dirname)]
 
 
 class Project(object):
