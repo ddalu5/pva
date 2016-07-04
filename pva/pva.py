@@ -2,7 +2,7 @@
 import argparse
 from lib.utils import *
 from settings import *
-from lib.projects_management import Project
+from lib.projects_management import Project, Pentest
 
 
 def get_parser():
@@ -24,4 +24,5 @@ def get_parser():
 
 
 if __name__ == "__main__":
-    print address_in_blacklist('173.245.48.1')
+    project = Pentest('yeees', 'google.com')
+    print project.save()

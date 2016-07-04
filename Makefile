@@ -9,7 +9,7 @@ build:
 
 run:
 	@echo "[#] Running"$(ENV_NAME)
-	docker run -itd --name $(ENV_NAME) $(CONTAINER)
+	docker run -itd --name $(ENV_NAME) -v /opt/pva:/root/daril/projects/ $(CONTAINER) 
 
 clean:
 	@echo "[#] Cleaning "$(ENV_NAME)

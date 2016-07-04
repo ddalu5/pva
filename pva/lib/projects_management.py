@@ -1,40 +1,56 @@
+import os
 from datetime import datetime
-from lib.utils import address_in_blacklist
+from settings import PROJECTS_DIR
+from lib.utils import address_in_blacklist, dump_object, create_directory
 
 
-class Project:
+class Project(object):
 
     def __init__(self, name):
         """
         :param name: Project's name
         """
-        self._project_name = name
+        self._project_name = name.lower()
         self._created_at = datetime.now().isoformat()
+        self._project_dir = PROJECTS_DIR+self._project_name+'/'
+        create_directory(self._project_dir)
 
 
     def get_name(self):
         """
-        :return: string: project's name
+        :return String: project's name
         """
         return self._project_name
 
 
     def get_date(self):
         """
-        :return: string: project's creation date
+        :return String: project's creation date
         """
         return self._created_at
 
 
+    def save(self):
+        """
+        Serialize and save object
+        """
+        class_name = self.__class__.__name__.lower()
+        if not class_name == Project.__name__.lower():
+            project_type_dir = self._project_dir+class_name+'/'
+            create_directory(project_type_dir)
+            file_name = project_type_dir+str(self._created_at)+'.pvap'
+            dump_object(file_name, self)
+
+
 class Pentest(Project):
 
-    def __init__(self, name, domaines, ignored_subdomaines):
+    def __init__(self, name, domaines, ignored_subdomaines=[]):
         """
         :param name: project's name
         :param domaines: project's basic domaine names
         :param ignored_subdomaines: Subdomaines to be ignored when detected
         """
-        super(WebProject, self).__init__(name)
+        super(Pentest, self).__init__(name)
         self._initial_domaines = domaines
         self._ignored_sbdomaines = ignored_subdomaines
         self._detected_domaines = {}
@@ -58,7 +74,7 @@ class Pentest(Project):
         """
         Get the domaine's IP addresses
         :param domaine: (sub)domaine name
-        :return: List|None: list of domaine's IP addresses or None
+        :return List|None: list of domaine's IP addresses or None
         """
         if domaine in self._detected_domaines:
             return self._detected_domaines[domaine]
