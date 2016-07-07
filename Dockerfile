@@ -15,6 +15,7 @@ RUN pip install impacket
 RUN pip install argparse
 RUN pip install https://github.com/guelfoweb/knock/archive/knock3.zip
 RUN pip install netaddr
+RUN pip install nose
 RUN mkdir -p /root/daril/Tools/ && mkdir -p /root/daril/projects/
 WORKDIR /root/daril
 ADD ./pva pva

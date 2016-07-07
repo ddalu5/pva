@@ -1,7 +1,7 @@
 CONTAINER=pva
 ENV_NAME=pva_dev
 
-all: reload execute
+all: reload test
 
 build:
 	@echo "[#] Building "$(ENV_NAME)" from "$(CONTAINER)
@@ -9,7 +9,7 @@ build:
 
 run:
 	@echo "[#] Running"$(ENV_NAME)
-	docker run -itd --name $(ENV_NAME) -v /opt/pva:/root/daril/projects/ $(CONTAINER) 
+	docker run -itd --name $(ENV_NAME) -v /opt/pva:/root/daril/projects/ $(CONTAINER)
 
 clean:
 	@echo "[#] Cleaning "$(ENV_NAME)
@@ -25,3 +25,6 @@ reload: clean build run start
 
 execute:
 	docker exec $(ENV_NAME) python pva/pva.py
+
+test:
+	docker exec $(ENV_NAME) nosetests --nocapture --verbosity=3 pva/tests/
