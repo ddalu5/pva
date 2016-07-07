@@ -24,7 +24,7 @@ class ProjectManagement(object):
         return [p[0].upper()+p[1:] for p in os.listdir(project_dirname)]
 
 
-    def get_saved_instance(self, project_name, project_type):
+    def get_project_instances(self, project_name, project_type):
         """
         Get list of processed project instances
         :return List|None: list of processed project instances
@@ -33,6 +33,20 @@ class ProjectManagement(object):
         if not os.path.exists(dirname):
             return None
         return [p[:-5] for p in os.listdir(dirname)]
+
+    def load_project_instance(self, project_name, project_type, project_instance):
+        """
+        Get project instance
+        :param project_name: project name
+        :param project_type: project type [pentest]
+        :param project_instance: project instance's name
+        :return Project|None: Project instance
+        """
+        filepath = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()+
+                    '/'+project_instance+'.pvap'
+        if os.path.isfile(filepath):
+            return load_dumped_object(filepath)
+        return None
 
 
 class Project(object):

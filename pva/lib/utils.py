@@ -2,6 +2,7 @@ try:
    import cPickle as pickle
 except:
    import pickle
+import os
 from netaddr import *
 from settings import IPS_BLACKLIST
 
@@ -43,5 +44,5 @@ def create_directory(dirname):
     Create directory
     :param dirname: full path to directory
     """
-    if not os.path.exists(self._project_dir):
-        os.makedirs(self._project_dir)
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
