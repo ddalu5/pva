@@ -3,6 +3,7 @@ try:
 except:
    import pickle
 import os
+import glob
 from netaddr import *
 from settings import IPS_BLACKLIST
 
@@ -25,8 +26,12 @@ def dump_object(filename, object):
     :param filename: full path to file
     :param object: object to be dumped
     """
-    with open(filename, 'wb') as f:
-        pickle.dump(object, f)
+    try:
+        with open(filename, 'wb') as f:
+            pickle.dump(object, f)
+            return True
+    except Exception:
+        return False
 
 
 def load_dumped_object(filename):
@@ -35,8 +40,11 @@ def load_dumped_object(filename):
     :param filename: full path to file
     :return Object:
     """
-    with open(filename, 'rb') as f:
-        return pickle.load(f)
+    try:
+        with open(filename, 'rb') as f:
+            return pickle.load(f)
+    except Exception:
+        return None
 
 
 def create_directory(dirname):
@@ -44,5 +52,24 @@ def create_directory(dirname):
     Create directory
     :param dirname: full path to directory
     """
-    if not os.path.exists(dirname):
-        os.makedirs(dirname)
+    try:
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+        return True
+    except Exception:
+        return False
+
+
+def get_recent_file(dirname, ext=None):
+    """
+    Get most recent file in a directory
+    :param dirname: directory path
+    :param ext: file extension
+    :return String: filepath
+    """
+    if ext:
+        files_pattern = dirname+'*.'+ext
+    else:
+        files_pattern = dirname+'*'
+    print files_pattern
+    return max(glob.iglob(files_pattern), key=os.path.getctime)

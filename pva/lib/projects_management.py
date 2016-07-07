@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from settings import PROJECTS_DIR
+from settings import PROJECTS_DIR, PVA_PROJECT_EXT
 from lib.utils import *
 
 class ProjectManagement(object):
@@ -34,6 +34,7 @@ class ProjectManagement(object):
             return None
         return [p[:-5] for p in os.listdir(dirname)]
 
+
     def load_project_instance(self, project_name, project_type, project_instance):
         """
         Get project instance
@@ -43,10 +44,21 @@ class ProjectManagement(object):
         :return Project|None: Project instance
         """
         filepath = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()+
-                    '/'+project_instance+'.pvap'
+                    '/'+project_instance+'.'+PROJECT_EXT
         if os.path.isfile(filepath):
             return load_dumped_object(filepath)
         return None
+        
+
+    def load_last_instance(self, project_name, project_type):
+        """
+        Load most recent instance
+        :param project_name: project name
+        :param project_type: project type [pentest]
+        :return Project|None: latest Project instance
+        """
+        dirname = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()+'/'
+        return load_dumped_object(get_recent_file(dirname, ext=PROJECT_EXT))
 
 
 class Project(object):
