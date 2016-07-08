@@ -5,12 +5,20 @@ from lib.utils import *
 
 class ProjectManagement(object):
 
+    def __init__(self, projects_dir=PROJECTS_DIR):
+        """
+        Constructor
+        :param projects_dir:
+        """
+        self.__projects_dir = projects_dir
+
+
     def get_projects_list(self):
         """
         Get projects list
         :return List: list of project names
         """
-        return os.listdir(PROJECTS_DIR)
+        return os.listdir(self.__projects_dir)
 
 
     def get_project_types(self, project_name):
@@ -18,7 +26,7 @@ class ProjectManagement(object):
         Get project types
         :return List|None: list of project's types
         """
-        project_dirname = PROJECTS_DIR+project_name.lower()
+        project_dirname = self.__projects_dir+project_name.lower()
         if not os.path.exists(project_dirname):
             return None
         return [p[0].upper()+p[1:] for p in os.listdir(project_dirname)]
@@ -29,7 +37,7 @@ class ProjectManagement(object):
         Get list of processed project instances
         :return List|None: list of processed project instances
         """
-        dirname = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()
+        dirname = self.__projects_dir+project_name.lower()+'/'+project_type.lower()
         if not os.path.exists(dirname):
             return None
         return [p[:-5] for p in os.listdir(dirname)]
@@ -43,12 +51,12 @@ class ProjectManagement(object):
         :param project_instance: project instance's name
         :return Project|None: Project instance
         """
-        filepath = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()+
+        filepath = self.__projects_dir+project_name.lower()+'/'+project_type.lower()+
                     '/'+project_instance+'.'+PROJECT_EXT
         if os.path.isfile(filepath):
             return load_dumped_object(filepath)
         return None
-        
+
 
     def load_last_instance(self, project_name, project_type):
         """
@@ -57,19 +65,19 @@ class ProjectManagement(object):
         :param project_type: project type [pentest]
         :return Project|None: latest Project instance
         """
-        dirname = PROJECTS_DIR+project_name.lower()+'/'+project_type.lower()+'/'
+        dirname = self.__projects_dir+project_name.lower()+'/'+project_type.lower()+'/'
         return load_dumped_object(get_recent_file(dirname, ext=PROJECT_EXT))
 
 
 class Project(object):
 
-    def __init__(self, name):
+    def __init__(self, name, root_dir=PROJECTS_DIR):
         """
         :param name: Project's name
         """
         self._project_name = name.lower()
         self._created_at = datetime.now().isoformat()
-        self._project_dir = PROJECTS_DIR+self._project_name+'/'
+        self._project_dir = root_dir+self._project_name+'/'
         create_directory(self._project_dir)
 
 
@@ -101,13 +109,13 @@ class Project(object):
 
 class Pentest(Project):
 
-    def __init__(self, name, domaines, ignored_subdomaines=[]):
+    def __init__(self, name, domaines, ignored_subdomaines=[], root_dir=PROJECTS_DIR):
         """
         :param name: project's name
         :param domaines: project's basic domaine names
         :param ignored_subdomaines: Subdomaines to be ignored when detected
         """
-        super(Pentest, self).__init__(name)
+        super(Pentest, self).__init__(name, root_dir)
         self._initial_domaines = domaines
         self._ignored_sbdomaines = ignored_subdomaines
         self._detected_domaines = {}
