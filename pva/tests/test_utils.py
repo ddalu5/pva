@@ -17,7 +17,7 @@ class TestObject(object):
 class TestUtils(unittest.TestCase):
 
     def setUp(self):
-        """setUp:utils"""
+        """setUp:lib/utils tests"""
         self.in_blacklist = '190.93.240.1'
         self.notin_blacklist = '190.13.240.13'
         self.data1 = 'data1'
@@ -27,19 +27,19 @@ class TestUtils(unittest.TestCase):
 
 
     def test_address_in_blacklist(self):
-        """utils:address_in_blacklist"""
+        """lib/utils:address_in_blacklist tests"""
         self.assertTrue(address_in_blacklist(self.in_blacklist))
         self.assertFalse(address_in_blacklist(self.notin_blacklist))
 
 
     def test_create_directory(self):
-        """utils:create_directory"""
+        """lib/utils:create_directory tests"""
         self.assertTrue(create_directory(TEST_DIR))
         self.assertTrue(os.path.exists(TEST_DIR))
 
 
     def test_dump_object(self):
-        """utils:dump_object"""
+        """lib/utils:dump_object tests"""
         to_dump = TestObject(self.data1, self.data2)
         filepath = TEST_DIR+self.dump_filename
         filepath2 = TEST_DIR+self.second_dump_filename
@@ -50,7 +50,7 @@ class TestUtils(unittest.TestCase):
 
 
     def test_load_dumped_object(self):
-        """utils:load_dumped_object"""
+        """lib/utils:load_dumped_object tests"""
         filepath = TEST_DIR+self.dump_filename
         loaded_dump = load_dumped_object(filepath)
         self.assertIsInstance(loaded_dump, TestObject)
@@ -58,7 +58,7 @@ class TestUtils(unittest.TestCase):
 
 
     def test_get_recent_file(self):
-        """utils:get_recent_file"""
+        """lib/utils:get_recent_file tests"""
         fd_filepath = TEST_DIR+self.dump_filename
         sd_filepath = TEST_DIR+self.second_dump_filename
         self.assertEqual(get_recent_file(TEST_DIR), sd_filepath)
