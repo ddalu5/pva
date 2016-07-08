@@ -1,6 +1,8 @@
 ROOT_DIR = '/root/daril/pva/'
 TOOLS_DIR = '/root/daril/Tools/'
 PROJECTS_DIR = '/root/daril/projects/'
+TEST_PROJECT_NAME = 'test_project'
+TEST_DIR = '/root/daril/tests/'
 DATA_DIR = ROOT_DIR+'data/'
 IPS_BLACKLIST = DATA_DIR+'ips-blacklist.txt'
 DOMAINES_BLACKLIST = DATA_DIR+'domaines-blacklist.txt'

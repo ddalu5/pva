@@ -71,5 +71,4 @@ def get_recent_file(dirname, ext=None):
         files_pattern = dirname+'*.'+ext
     else:
         files_pattern = dirname+'*'
-    print files_pattern
     return max(glob.iglob(files_pattern), key=os.path.getctime)
